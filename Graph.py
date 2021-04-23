@@ -58,15 +58,12 @@ class Graph:
             color = self.rgb_to_hex((rand.randint(0, 255),rand.randint(0, 255),rand.randint(0, 255)))
             color_dict.update({j:color})
 
-        print(color_dict)
 
-        for i in range(len(self.ax.lines)):
-            
+        for i in range(len(lst)):
             for key in color_dict:
                 print(key)
-                print(i)
-
                 if lst[i][0] == key:
+                    print(lst[i][0])
                     self.ax.lines[i].set_color(color_dict[key])
 
 
