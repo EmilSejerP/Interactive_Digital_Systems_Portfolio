@@ -14,10 +14,10 @@ class UserInput:
         self.KMeans.updateStoreArray([event.xdata, event.ydata])
         self.graph.draw_new_store(event)
         if self.KMeans.calculateKMeans() != 0:
-            self.graph.recolor(self.KMeans.getZipped())
+            self.graph.recolor(self.KMeans.getZipped(),2)
             self.graph.calculate_edges(self.KMeans.getZipped())
             calc = self.KMeans.calculateKMeans()
-            self.graph.draw_new_centroids(calc[0],calc[1])
+            self.graph.draw_new_centroids(calc)
         else:
             print("not ready for centroids")
         self.graph.updateGraph()

@@ -3,7 +3,7 @@ import numpy as np
 import math
 import urllib.request
 import PIL
-
+import random as rand
 class Graph:
 
     # Init creates empty graph
@@ -31,34 +31,37 @@ class Graph:
 
     # Creates centroids
 
-    def draw_new_centroid(self,centroid):
-        self.ax.plot(centroid[0], centroid[1], 'X')
+    #def draw_new_centroid(self,centroid):
+    #    self.ax.plot(centroid[0], centroid[1], 'X')
 
     #takes an array of centroids and plots them on the graph
     def draw_new_centroids(self, centroids):
         for centroid in centroids:
             self.ax.plot(centroid[0], centroid[1], 'X')
 
-    def draw_new_centroids(self, centroid1, centroid2):
-        self.ax.plot(centroid1[0], centroid1[1], 'X')
-        self.ax.plot(centroid2[0], centroid2[1], 'X')
+    #def draw_new_centroids(self, centroid1, centroid2):
+    #    self.ax.plot(centroid1[0], centroid1[1], 'X')
+    #    self.ax.plot(centroid2[0], centroid2[1], 'X')
     
     def remove_old(self):
         if len(self.ax.lines) > 5:
             self.ax.lines.pop()
             self.ax.lines.pop()
 
-    def recolor(self,lst):
-        self.lst_cluster_a = []
-        self.lst_cluster_b = []
+    def recolor(self,lst,n):
+        color_dict = {}
+        for j in range(n):                                  #Generate colors
+            color_dict.update({j:hex(rand.randint(0, 999))})
+        print(color_dict)
+
         for i in range(len(self.ax.lines)):
-            if lst[i][0] == 1:
-                self.ax.lines[i].set_color('red')
-                self.lst_cluster_a.append([self.ax.lines[i].get_xdata()[0],self.ax.lines[i].get_ydata()[0]])
-            else:
-                self.ax.lines[i].set_color('green')   
-                self.lst_cluster_b.append([self.ax.lines[i].get_xdata()[0],self.ax.lines[i].get_ydata()[0]])
+            for key in color_dict:
+                if lst[i][0] == key:
+                    self.ax.lines[i].set_color(dict[key])
+
+
         print(self.lst_cluster_a)
+
 
     def set_background(self,img):
         self.ax.imshow(img)
