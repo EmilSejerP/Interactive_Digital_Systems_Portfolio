@@ -6,43 +6,45 @@ import json
 import re
 class GoogleMapsConnection:
     def __init__(self):
-
-        self.api_file = open(r'C:\Users\emils\Desktop\API_Key.txt')
-        self.api_key = self.api_file.read()
-        self.api_file.close()
-        self.lat = 0.0
+        self.api_file = open(r'C:\Users\emils\Desktop\API_Key.txt') #open google api key
+        self.api_key = self.api_file.read()                         #read the api key file
+        self.api_file.close()                                       #close
+        self.lat = 0.0                                              #inits 
         self.lng = 0.0
 
     #Henter en Json fil for byen du giver i en string
     def get_city_json(self,city):
         try:
-            url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=' + self.api_key
-            resp = requests.get(url)
-            data = resp.json()
-            test = json.dumps([s['geometry']['location'] for s in data['results']])
-            dict = json.loads(test[1:-1])
-            self.lat = dict.get('lat')
-            self.lng = dict.get('lng')
+            url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=' + self.api_key #fetch url with api-key
+            resp = requests.get(url)                                                                           #fetch the data from the address
+            data = resp.json()                                                                                 #read as json 
+            test = json.dumps([s['geometry']['location'] for s in data['results']])                            #save geometry and location data for all results
+            dict = json.loads(test[1:-1])                                                                      #load as dictionary again
+            self.lat = dict.get('lat')                                                                         #latitude in dict        
+            self.lng = dict.get('lng')                                                                         #longitude in dict
         except:
-            print("Something got fucked when getting city json")
+            print("Something went wrong when fetching json file for city. Check your API key.")
 
 
     def getIMG(self):
         try:
-            print(self.lat)
-            print(self.lng)
+            #print(self.lat) 
+            #print(self.lng)
 
-            r = requests.get('https://maps.googleapis.com/maps/api/staticmap?center=' + str(self.lat) + ',' + str(self.lng) + '&zoom=12&size=600x600&key=' + self.api_key)
+            r = requests.get('https://maps.googleapis.com/maps/api/staticmap?center=' + str(self.lat)
+                           + ',' + str(self.lng)
+                           + '&zoom=12&size=600x600&key=' 
+                           + self.api_key) #fetch the image data from gmaps with the longitude and latitude provided earlier
 
-            file = open("sample_image.png", "wb")
-            file.write(r.content)
-            file.close()
+            file = open("sample_image.png", "wb") #open arbitrary init image
+            file.write(r.content)                 #write the image data from gmaps to that image
+            file.close()                          #
 
-            image = Image.open('sample_image.png')
+            image = Image.open('sample_image.png') #then read the file as an image
             return image
         except:
-            print('could not fetch image :/')
-            print(r)
+            print('Could not fetch image :/, make sure your API key is correct.')
+
 
 
 

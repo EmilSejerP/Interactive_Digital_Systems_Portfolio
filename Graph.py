@@ -7,21 +7,22 @@ import PIL
 class Graph:
 
     # Init creates empty graph
-    def __init__(self):
-        self.fig, self.ax = plt.subplots()
-        self.lst_cluster_a = []
+    def __init__(self):                     #graph constructor
+        self.fig, self.ax = plt.subplots()  #init graph components
+        self.centroidToPoints = {}          #points connected to centroids
+        self.lst_cluster_a = []             #cluster from 1 centroid
         self.lst_cluster_b = []
-        self.edgesArray = {}
+        self.edgesArray = {}                #All edges passing from a given point
 
     #Create TSP
-    def calculate_edges(self, lst):
+    def calculate_edges(self, lst): #calculate the distance from a given point to all other points in the array.
         for i in range(len(lst)):
             for j in range(len(lst)):
                 edge_dist = math.sqrt(((lst[i][1][0]-lst[j][1][0])**2) + ((lst[i][1][1]-lst[j][1][1])**2))
                 #if(lst[i][0] == 1)
 
-    # Creates a connection to the graph
-    def connect_to_graph(self, typeEvent, typeUserInput):
+    # Creates a connection to the graph which allows us to check for mouse clicks.
+    def connect_to_graph(self, typeEvent, typeUserInput):   
         self.fig.canvas.mpl_connect(typeEvent, typeUserInput)
 
     # Creates a new plot taking event data on graph
@@ -29,6 +30,15 @@ class Graph:
             self.ax.plot(event.xdata, event.ydata, 'o')
 
     # Creates centroids
+
+    def draw_new_centroid(self,centroid):
+        self.ax.plot(centroid[0], centroid[1], 'X')
+
+    #takes an array of centroids and plots them on the graph
+    def draw_new_centroids(self, centroids):
+        for centroid in centroids:
+            self.ax.plot(centroid[0], centroid[1], 'X')
+
     def draw_new_centroids(self, centroid1, centroid2):
         self.ax.plot(centroid1[0], centroid1[1], 'X')
         self.ax.plot(centroid2[0], centroid2[1], 'X')
