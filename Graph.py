@@ -43,21 +43,31 @@ class Graph:
     #    self.ax.plot(centroid1[0], centroid1[1], 'X')
     #    self.ax.plot(centroid2[0], centroid2[1], 'X')
     
-    def remove_old(self):
+    def remove_old(self,n):
         if len(self.ax.lines) > 5:
-            self.ax.lines.pop()
-            self.ax.lines.pop()
+            for i in range(n):
+                self.ax.lines.pop()
 
-    def recolor(self,lst,n):
+    def rgb_to_hex(self,rgb):
+        return '#'+'%02x%02x%02x' % rgb
+
+    def recolor(self,lst,n,amntVertices):
         color_dict = {}
+
         for j in range(n):                                  #Generate colors
-            color_dict.update({j:hex(rand.randint(0, 999))})
+            color = self.rgb_to_hex((rand.randint(0, 255),rand.randint(0, 255),rand.randint(0, 255)))
+            color_dict.update({j:color})
+
         print(color_dict)
 
         for i in range(len(self.ax.lines)):
+            
             for key in color_dict:
+                print(key)
+                print(i)
+
                 if lst[i][0] == key:
-                    self.ax.lines[i].set_color(dict[key])
+                    self.ax.lines[i].set_color(color_dict[key])
 
 
         print(self.lst_cluster_a)

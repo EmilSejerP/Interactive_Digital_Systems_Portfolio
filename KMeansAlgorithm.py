@@ -8,6 +8,7 @@ class KMeansAlgorithm:
         self.zipped = []
         self.returnClusters = []
     # Call to update array for kmeans
+
     def updateStoreArray(self, coords):
         self.arrayOfStores.append(coords)
 
@@ -19,9 +20,11 @@ class KMeansAlgorithm:
             self.zipped = list(zip(kmeans.labels_, self.arrayOfStores))  #create a list of the stores and the kmeans label, which can be used to identify which stores are in which clusters
             clusters = kmeans.cluster_centers_                           #save the kmeans clusters.
 
-            for i in range(self.n-1):                                      #for all the kmeans clusters
-                cluster1 = [clusters[i][i], clusters[i][i+1]]            #create the cluster from data
-                self.returnClusters.append(cluster1)                          #append them to the return array.
+            self.returnClusters = []
+
+            for i in range(self.n):                                    #for all the kmeans clusters
+                cluster1 = [clusters[i][0], clusters[i][1]]            #create the cluster from data
+                self.returnClusters.append(cluster1)                   #append them to the return array.
 
             return self.returnClusters                                    #Return the clusters.
         else:

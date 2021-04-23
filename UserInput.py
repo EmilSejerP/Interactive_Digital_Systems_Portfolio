@@ -10,14 +10,14 @@ class UserInput:
 
     #Takes mouse click input and class to draw on graph and update the graph
     def onMouseClick(self,event):
-        self.graph.remove_old()
+        #self.graph.remove_old(self.KMeans.n) #assuming the last points in the list are kmeans clusters so they can be popped
         self.KMeans.updateStoreArray([event.xdata, event.ydata])
-        self.graph.draw_new_store(event)
+        self.graph.draw_new_store(event) #draw store/vertex
         if self.KMeans.calculateKMeans() != 0:
-            self.graph.recolor(self.KMeans.getZipped(),2)
             self.graph.calculate_edges(self.KMeans.getZipped())
             calc = self.KMeans.calculateKMeans()
             self.graph.draw_new_centroids(calc)
+            self.graph.recolor(self.KMeans.getZipped(),self.KMeans.n,len(self.KMeans.arrayOfStores))
         else:
             print("not ready for centroids")
         self.graph.updateGraph()

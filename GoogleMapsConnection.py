@@ -4,9 +4,20 @@ from PIL import Image
 import urllib.request
 import json
 import re
+import os
+
 class GoogleMapsConnection:
     def __init__(self):
-        self.api_file = open(r'C:\Users\emils\Desktop\API_Key.txt') #open google api key
+        path = os.path.expanduser("~/Desktop") + ('\API_Key.txt')
+
+        try:
+            self.api_file = open(path) #open google api key
+        except:
+            print("Could not fetch API key, is it missing?")
+
+        print(path)
+
+        print(self.api_file)
         self.api_key = self.api_file.read()                         #read the api key file
         self.api_file.close()                                       #close
         self.lat = 0.0                                              #inits 
