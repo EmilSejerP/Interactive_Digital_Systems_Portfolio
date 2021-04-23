@@ -7,10 +7,10 @@ def main():
     graph = Graph()               #Init graph          
     gapi = GoogleMapsConnection() #Init google maps api
 
-    gapi.get_city_json('Roskilde') #Fetch the coordinates 
+    gapi.get_city_json('Denmark') #Fetch the coordinates
     img = gapi.getIMG()            #Fetch picture 
 
-    kmeans = KMeansAlgorithm(2)      #Init KMeans algoritmen
+    kmeans = KMeansAlgorithm(3)      #Init KMeans algoritmen
     usein = UserInput(graph,kmeans) #Init UserInput klassen
 
     graph.set_background(img) #Sætter graph baggrunden til img variablen

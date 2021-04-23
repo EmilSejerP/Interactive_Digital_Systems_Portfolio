@@ -29,19 +29,10 @@ class Graph:
     def draw_new_store(self, event):
             self.ax.plot(event.xdata, event.ydata, 'o')
 
-    # Creates centroids
-
-    #def draw_new_centroid(self,centroid):
-    #    self.ax.plot(centroid[0], centroid[1], 'X')
-
     #takes an array of centroids and plots them on the graph
     def draw_new_centroids(self, centroids):
         for centroid in centroids:
             self.ax.plot(centroid[0], centroid[1], 'X')
-
-    #def draw_new_centroids(self, centroid1, centroid2):
-    #    self.ax.plot(centroid1[0], centroid1[1], 'X')
-    #    self.ax.plot(centroid2[0], centroid2[1], 'X')
     
     def remove_old(self,n):
         if len(self.ax.lines) > 5:

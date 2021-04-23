@@ -15,9 +15,6 @@ class GoogleMapsConnection:
         except:
             print("Could not fetch API key, is it missing?")
 
-        print(path)
-
-        print(self.api_file)
         self.api_key = self.api_file.read()                         #read the api key file
         self.api_file.close()                                       #close
         self.lat = 0.0                                              #inits 
@@ -45,11 +42,11 @@ class GoogleMapsConnection:
             r = requests.get('https://maps.googleapis.com/maps/api/staticmap?center=' + str(self.lat)
                            + ',' + str(self.lng)
                            + '&zoom=12&size=600x600&key=' 
-                           + self.api_key) #fetch the image data from gmaps with the longitude and latitude provided earlier
+                           + self.api_key)        #fetch the image data from gmaps with the longitude and latitude provided earlier
 
             file = open("sample_image.png", "wb") #open arbitrary init image
             file.write(r.content)                 #write the image data from gmaps to that image
-            file.close()                          #
+            file.close()
 
             image = Image.open('sample_image.png') #then read the file as an image
             return image
