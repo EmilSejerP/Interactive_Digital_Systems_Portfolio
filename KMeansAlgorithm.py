@@ -9,11 +9,11 @@ class KMeansAlgorithm:
         self.returnClusters = []
     # Call to update array for kmeans
 
-    def updateStoreArray(self, coords):
+    def update_store_list(self, coords):
         self.arrayOfStores.append(coords)
 
     # Calculates KMeans if there is more than 4 stores in the array
-    def calculateKMeans(self):
+    def calculate_kmeans(self):
         if len(self.arrayOfStores) > 4:                                  #if number of stores are above 4 calculate kmeans.
             kmeans = K(n_clusters=self.n)                                #init amount of clusters to input n value.   
             kmeans.fit(self.arrayOfStores)                               #fit the kmeans to the store array.   
@@ -31,5 +31,5 @@ class KMeansAlgorithm:
             print("Need more stores to calculate KMeans")
             return 0
 
-    def getZipped(self):
+    def get_zipped(self):
         return self.zipped

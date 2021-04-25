@@ -4,21 +4,19 @@ class UserInput:
     def __init__(self,graph,KMeans):
         self.graph = graph
         self.KMeans = KMeans
-        #Connects to graph
-        graph.connect_to_graph('button_press_event', self.onMouseClick)
+        self.graph.connect_to_graph('button_press_event', self.on_mouse_click)
 
 
     #Takes mouse click input and class to draw on graph and update the graph
-    def onMouseClick(self,event):
-        self.graph.remove_old(self.KMeans.n) #assuming the last points in the list are kmeans clusters so they can be popped
-        self.KMeans.updateStoreArray([event.xdata, event.ydata])
-        self.graph.draw_new_store(event) #draw store/vertex
-        if self.KMeans.calculateKMeans() != 0:
-            self.graph.calculate_edges(self.KMeans.getZipped())
-            calc = self.KMeans.calculateKMeans()
+    def on_mouse_click(self, event):
+        self.graph.remove_old(self.KMeans.n)
+        self.KMeans.update_store_list([event.xdata, event.ydata])
+        self.graph.draw_new_store(event)
+        if self.KMeans.calculate_kmeans() != 0:
+            calc = self.KMeans.calculate_kmeans()
             self.graph.draw_new_centroids(calc)
-            self.graph.recolor(self.KMeans.getZipped(),self.KMeans.n,len(self.KMeans.arrayOfStores))
+            self.graph.recolor(self.KMeans.get_zipped(), self.KMeans.n)
         else:
             print("not ready for centroids")
-        self.graph.updateGraph()
+        self.graph.update_graph()
 
