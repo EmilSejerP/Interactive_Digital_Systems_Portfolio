@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import requests
 from PIL import Image
-import urllib.request
 import json
-import re
 import os
 
 class GoogleMapsConnection:
@@ -15,16 +13,13 @@ class GoogleMapsConnection:
         except:
             print("Could not fetch API key, is it missing?")
 
-        print(path)
-
-        print(self.api_file)
         self.api_key = self.api_file.read()                         #read the api key file
         self.api_file.close()                                       #close
         self.lat = 0.0                                              #inits 
         self.lng = 0.0
 
     #Henter en Json fil for byen du giver i en string
-    def get_city_json(self,city):
+    def get_coord_json(self, city):
         try:
             url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + '&key=' + self.api_key #fetch url with api-key
             resp = requests.get(url)                                                                           #fetch the data from the address
@@ -37,19 +32,16 @@ class GoogleMapsConnection:
             print("Something went wrong when fetching json file for city. Check your API key.")
 
 
-    def getIMG(self):
+    def get_image(self):
         try:
-            #print(self.lat) 
-            #print(self.lng)
-
             r = requests.get('https://maps.googleapis.com/maps/api/staticmap?center=' + str(self.lat)
                            + ',' + str(self.lng)
-                           + '&zoom=12&size=600x600&key=' 
-                           + self.api_key) #fetch the image data from gmaps with the longitude and latitude provided earlier
+                           + '&zoom=8&size=600x600&key='
+                           + self.api_key)        #fetch the image data from gmaps with the longitude and latitude provided earlier
 
             file = open("sample_image.png", "wb") #open arbitrary init image
             file.write(r.content)                 #write the image data from gmaps to that image
-            file.close()                          #
+            file.close()
 
             image = Image.open('sample_image.png') #then read the file as an image
             return image
